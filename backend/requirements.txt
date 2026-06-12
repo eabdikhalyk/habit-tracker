@@ -7,3 +7,4 @@ python-jose
 passlib
 python-dotenv
 anthropic
+python-multipart
