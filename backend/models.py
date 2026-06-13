@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Text
+from sqlalchemy.sql import func
 from database import Base
 
 class User(Base):
@@ -6,20 +7,42 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True, nullable=False)
-    # ↑ unique=True — два пользователя с одним email невозможны
-    password = Column(String)
-    # ↑ здесь будет хэш, не сам пароль
+    password = Column(String, nullable=False)
+    telegram_id = Column(String, unique=True, nullable=True)
+    # ↑ для Telegram бота — добавим позже
+    created_at = Column(DateTime, server_default=func.now())
 
-class Habit(Base):
-    __tablename__ = "habits"
-    # ↑ название таблицы в PostgreSQL
+class BadHabit(Base):
+    __tablename__ = "bad_habits"
 
     id = Column(Integer, primary_key=True)
-    # ↑ уникальный ID каждой привычки
-
-    title = Column(String)
-    # ↑ название привычки
-
-    streak = Column(Integer, default=0)
-    # ↑ сколько дней подряд выполнена
+    title = Column(String, nullable=False)
+    # ↑ например "Алкоголь", "Курение"
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    start_date = Column(Date, nullable=False)
+    # ↑ когда начал бороться
+    streak = Column(Integer, default=0)
+    # ↑ дней без срыва
+    frozen = Column(Integer, default=0)
+    # ↑ 0 = активен, 1 = заморожен (не отвечал 2+ дня)
+    created_at = Column(DateTime, server_default=func.now())
+
+class Relapse(Base):
+    __tablename__ = "relapses"
+
+    id = Column(Integer, primary_key=True)
+    habit_id = Column(Integer, ForeignKey("bad_habits.id", ondelete="CASCADE"), nullable=False)
+    date = Column(Date, nullable=False)
+    note = Column(Text, nullable=True)
+    # ↑ пользователь может написать что случилось
+    created_at = Column(DateTime, server_default=func.now())
+
+class Checkin(Base):
+    __tablename__ = "checkins"
+
+    id = Column(Integer, primary_key=True)
+    habit_id = Column(Integer, ForeignKey("bad_habits.id", ondelete="CASCADE"), nullable=False)
+    date = Column(Date, nullable=False)
+    status = Column(String, nullable=False)
+    # ↑ "holding" = держится, "relapsed" = сорвался, "no_response" = не ответил
+    created_at = Column(DateTime, server_default=func.now())
