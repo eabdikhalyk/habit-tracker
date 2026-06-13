@@ -44,6 +44,18 @@ def get_habits(
     habits = db.query(BadHabit).filter(BadHabit.user_id == current_user.id).all()
     return habits
 
+@router.get("/{habit_id}/relapses")
+def get_relapse(habit_id:int,
+                db: Session = Depends(get_db), 
+                current_user: User = Depends(get_current_user)):
+    habit = db.query(BadHabit).filter(BadHabit.id == habit_id, BadHabit.user_id == current_user.id).first()
+    
+    if not habit:
+        raise HTTPException(status_code=404, detail="Привычка не найдена")
+    
+    relapses = db.query(Relapse).filter(Relapse.habit_id == habit.id).all()
+    return relapses    
+
 # Зафиксировать срыв
 @router.post("/{habit_id}/relapse")
 def record_relapse(
@@ -114,3 +126,18 @@ def daily_checkin(
         "message": f"Молодец! Держишься уже {habit.streak} дней 🔥",
         "streak": habit.streak
     }
+
+
+@router.delete("/{habit_id}")
+def delete_habit(habit_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+        habit = db.query(BadHabit).filter(
+            BadHabit.id == habit_id,
+            BadHabit.user_id == current_user.id
+        ).first()
+
+        if not habit:
+            raise HTTPException(status_code=404, detail="Привычка не найдена")
+
+        db.delete(habit)
+        db.commit()
+        return {"message": "Привычка удалена"}
