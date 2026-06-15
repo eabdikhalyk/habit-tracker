@@ -6,7 +6,6 @@ from dependencies import get_current_user
 from models import User
 from pydantic import BaseModel
 from datetime import date
-
 router = APIRouter()
 
 class HabitSchema(BaseModel):
@@ -141,3 +140,14 @@ def delete_habit(habit_id: int, db: Session = Depends(get_db), current_user: Use
         db.delete(habit)
         db.commit()
         return {"message": "Привычка удалена"}
+    
+@router.get("/{habit_id}/streak")
+def get_streak(habit_id: int, db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):
+    
+    habit = db.query(BadHabit).filter(BadHabit.id == habit_id, BadHabit.user_id == current_user.id).first()
+    if not habit:
+            raise HTTPException(status_code=404, detail="Привычка не найдена")
+    else:
+        days_total = (date.today() - habit.start_date).days
+        return {"streak":habit.streak, "start_date":habit.start_date, "days_total":days_total}
+    
