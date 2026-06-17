@@ -9,3 +9,5 @@ python-dotenv
 anthropic
 python-multipart
 python-telegram-bot
+apscheduler
+pytz
