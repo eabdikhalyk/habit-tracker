@@ -97,8 +97,13 @@ async def handle_checkin(update, context):
 
         # Увеличиваем streak
         habit.streak += 1
+        
+        if habit.streak > habit.max_streak:
+            habit.max_streak = habit.streak
+            
         db.commit()
-        await query.message.reply_text(f"Молодец! 🔥 Уже {habit.streak} дней!")
+        await query.message.reply_text(f"Молодец! 🔥 Уже {habit.streak} дней!\n"
+                                        f"Твой рекорд: {habit.max_streak} дней")
     else:
         existing = db.query(Relapse).filter(
         Relapse.habit_id == habit_id,

@@ -22,6 +22,7 @@ class BadHabit(Base):
     start_date = Column(Date, nullable=False)
     # ↑ когда начал бороться
     streak = Column(Integer, default=0)
+    max_streak = Column(Integer, default=0)
     # ↑ дней без срыва
     frozen = Column(Integer, default=0)
     # ↑ 0 = активен, 1 = заморожен (не отвечал 2+ дня)
