@@ -43,7 +43,7 @@ async def link_account(update, context):
 
 scheduler = AsyncIOScheduler()
 
-@scheduler.scheduled_job("cron", hour=7, minute=18, timezone=timezone("Asia/Aqtobe"))
+@scheduler.scheduled_job("cron", hour=7, minute=22, timezone=timezone("Asia/Aqtobe"))
 async def send_daily_checkin():
     print("=== scheduler запустился ===")
     
