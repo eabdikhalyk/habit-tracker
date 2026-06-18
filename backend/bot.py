@@ -20,7 +20,7 @@ async def on_startup(app):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     await update.message.reply_text(
-        f"Привет! Твой Telegram ID: {chat_id}\n\nНапиши свой email чтобы привязать аккаунт:"
+        f"Привет! Твой Telegram ID: {chat_id}\n\nНапиши свой login/email чтобы привязать аккаунт:"
     )
 
 
