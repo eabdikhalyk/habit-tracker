@@ -100,7 +100,15 @@ async def handle_checkin(update, context):
         db.commit()
         await query.message.reply_text(f"Молодец! 🔥 Уже {habit.streak} дней!")
     else:
-
+        existing = db.query(Relapse).filter(
+        Relapse.habit_id == habit_id,
+        Relapse.date == date.today()
+        ).first()
+        
+        if existing:
+            await query.message.reply_text("Ты уже отметился сегодня ✅")
+            db.close()
+            return
         # Записываем срыв
         relapse = Relapse(
         habit_id=habit_id,
