@@ -43,7 +43,7 @@ async def link_account(update, context):
 
 scheduler = AsyncIOScheduler()
 
-@scheduler.scheduled_job("cron", hour=7, minute=22, timezone=timezone("Asia/Aqtobe"))
+@scheduler.scheduled_job("cron", hour=9, minute=00, timezone=timezone("Asia/Aqtobe"))
 async def send_daily_checkin():
     print("=== scheduler запустился ===")
     
@@ -62,7 +62,7 @@ async def send_daily_checkin():
         InlineKeyboardButton("😔 Сорвался", callback_data=f"relapsed_{habit.id}"),
         ]]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        await bot.send_message(chat_id=user.telegram_id, text=f"Как прошёл день?\n\n🔥 Без {habit.title} — {habit.streak} дней\nДержишься?", reply_markup=reply_markup)
+        await bot.send_message(chat_id=user.telegram_id, text=f"Доброе утро! ☀️\n\nКак прошёл вчерашний день?\n\n🔥 Без {habit.title} — {habit.streak} дней\nДержался?", reply_markup=reply_markup)
     
     db.close()
 
