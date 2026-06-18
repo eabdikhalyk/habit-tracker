@@ -5,11 +5,12 @@ import os
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# Добавляем SSL прямо в URL
-if DATABASE_URL and "sslmode" not in DATABASE_URL:
+# SSL только для Railway, не для локального Docker
+if DATABASE_URL and "sslmode" not in DATABASE_URL and "railway" in DATABASE_URL:
     DATABASE_URL += "?sslmode=require"
 
 engine = create_engine(DATABASE_URL)
