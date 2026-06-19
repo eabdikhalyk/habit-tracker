@@ -6,6 +6,7 @@ from passlib.context import CryptContext
 from jose import jwt    
 from datetime import datetime, timedelta
 from pydantic import BaseModel
+from sqlalchemy import or_
 import os
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -15,24 +16,28 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 class RegisterSchema(BaseModel):
     email: str
+    login: str
     password: str
-    
+
 class LoginSchema(BaseModel):
     email: str
     password: str
-    
+
 @router.post("/register")
 def register(user: RegisterSchema, db: Session = Depends(get_db)):
-    existing = db.query(User).filter(User.email == user.email).first()
+    # Проверяем, что ни email, ни login ещё не заняты (одним запросом через or_).
+    existing = db.query(User).filter(
+        or_(User.email == user.email, User.login == user.login)
+    ).first()
     if existing:
-        raise HTTPException(status_code=400, detail="Email уже занят") 
-    
+        raise HTTPException(status_code=400, detail="Email или login уже заняты")
+
     hashed_password = pwd_context.hash(user.password)
-    user = User(email=user.email, password=hashed_password)
+    user = User(email=user.email, login=user.login, password=hashed_password)
     db.add(user)
     db.commit()
     db.refresh(user)
-    
+
     return {"message": "Регистрация успешна", "user_id": user.id}
 
 @router.post("/login")
@@ -41,10 +46,12 @@ def login(
     # ↑ OAuth2 принимает form-data с полями username и password
     db: Session = Depends(get_db)
 ):
-    user = db.query(User).filter(User.email == form_data.username).first()
-    # ↑ username здесь это наш email
+    # form_data.username здесь — это "email или login". Ищем по обоим полям.
+    user = db.query(User).filter(
+        or_(User.email == form_data.username, User.login == form_data.username)
+    ).first()
     if not user:
-        raise HTTPException(status_code=401, detail="Неверный email или пароль")
+        raise HTTPException(status_code=401, detail="Неверный email/login или пароль")
 
     if not pwd_context.verify(form_data.password, user.password):
         raise HTTPException(status_code=401, detail="Неверный email или пароль")

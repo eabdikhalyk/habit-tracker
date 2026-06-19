@@ -13,8 +13,8 @@ class HabitSchema(BaseModel):
     # ↑ например "Алкоголь", "Курение"
 
 class RelapseSchema(BaseModel):
-    note: str = None
-    # ↑ опциональная заметка — что случилось
+    note: str | None = None
+    # ↑ опциональная заметка; str | None разрешает И отсутствие поля, И явный null
 
 # Создать вредную привычку
 @router.post("/")

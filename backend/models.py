@@ -7,6 +7,8 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True, nullable=False)
+    login = Column(String, unique=True, nullable=True)
+    # ↑ ник для входа; nullable=True, чтобы существующие записи без login не ломали БД
     password = Column(String, nullable=False)
     telegram_id = Column(String, unique=True, nullable=True)
     # ↑ для Telegram бота — добавим позже
