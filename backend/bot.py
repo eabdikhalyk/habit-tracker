@@ -259,7 +259,7 @@ async def sos(update: Update, context: ContextTypes.DEFAULT_TYPE):
 scheduler = AsyncIOScheduler()
 
 
-@scheduler.scheduled_job("cron", hour=9, minute=0, timezone=TZ)
+@scheduler.scheduled_job("cron", hour=21, minute=4, timezone=TZ)
 async def send_daily_checkin():
     db = SessionLocal()
     users = db.query(SobrietyUser).all()
