@@ -32,22 +32,22 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_MODEL = "llama-3.1-8b-instant"
 TZ = timezone("Asia/Aqtobe")
 
-ADDICTIONS = ["Алкоголь", "Темекі шегу", "Ойын", "Тәтті", "Басқа"]
+ADDICTIONS = ["Алкоголь", "Курение", "Игры", "Сладкое", "Другое"]
 
 MOTIVATIONAL_QUOTES = [
-    "Сырылмаған әр күн — ешкім тартып ала алмайтын жеңісің. 💪",
-    "Мінсіз болуың міндетті емес, бүгін жай ғана берілме. 🔥",
-    "Әдеттің күші әр таңда қайта қабылданған шешімнің күшінен әлдеқайда төмен. ☀️",
-    "Құмарлық — толқын сияқты. Көтеріліп, содан кейін басылады. Сен оны бірнеше рет бастан өткіздің. 🌊",
-    "Бір жылдан кейін бүгін бермегеніңе қуанасың. 🌱",
+    "Каждый день без срыва — это победа, которую у тебя никто не отнимет. 💪",
+    "Ты не должен быть идеальным, просто не сдавайся сегодня. 🔥",
+    "Сила привычки слабее силы решения, принятого заново каждое утро. ☀️",
+    "Тяга — это волна. Она поднимается и опускается. Ты её пережил уже не раз. 🌊",
+    "Через год ты будешь рад, что не сдался сегодня. 🌱",
 ]
 
 SOS_TIPS = [
-    "Құмарлық орта есеппен 10-20 минут жалғасады. Ештеңе істемесең де, ол өтіп кетеді. Осы минутты шыда. ⏳",
-    "Дем алайық: 4 санда дем ал, 7 санда ұста, 8 санда шығар. 4 рет қайтала. 🫁",
-    "Бір стакан су іш және 5 минут бөлмеде/көшеде серуендеп жүр. Қалыпты өзгерту құмарлықты басады. 🚶",
-    "Қазір сені қолдайтын біреуге жаз. Құмарлық туралы болуы міндетті емес — жай ғана жаз. 📱",
-    "Есіңе ал: неге бастадың? Осы себепті дауыстап оқы. 🎯",
+    "Тяга длится в среднем 10-20 минут. Она пройдёт, даже если ничего не делать. Просто продержись эти минуты. ⏳",
+    "Подышим: вдох на 4 счёта, задержка на 7, выдох на 8. Повтори 4 раза. 🫁",
+    "Выпей стакан воды и пройдись по комнате/улице 5 минут. Смена позы сбивает тягу. 🚶",
+    "Напиши сейчас одному человеку, который тебя поддерживает. Не обязательно про тягу — просто напиши. 📱",
+    "Вспомни: зачем ты начал? Прочитай эту причину вслух. 🎯",
 ]
 
 
@@ -57,18 +57,18 @@ SOS_TIPS = [
 
 def coach_system_prompt(addiction: str) -> str:
     return (
-        f"Сен — қазіргі заманғы, білімді мұсылман ұстазсың (заман талабын түсінетін жас устаз сияқты), "
-        f"«{addiction}» тәуелділігінен арылуға көмектесесің. Сөйлеу мәнерің — жылы, дос-бауырлас "
-        f"сияқты («бауырым» деп қарай), ескіше уағыз оқып отырған қарт молда емес, заманауи және "
-        f"түсінікті тілмен сөйлейтін адам. Адамның қазіргі өмірін түсін: жұмыс стресі, әлеуметтік "
-        f"желі, достар арасындағы қысым — осыларды ескере отырып кеңес бер. "
-        f"Ислами құндылықтарға сүйен: сабыр, тәуекел (Аллаһқа сенім арту), истиғфар арқылы жан тазалығы, "
-        f"дұға мен намаздың күші, Аллаһтың Кешірімді әрі Мейірімді екенін еске сал — бірақ мұны "
-        f"уағыз ретінде емес, жанашыр кеңес ретінде айт. "
-        f"Құран аяттарының немесе хадистердің нақты нөмірлерін келтірме және дәл тұжырымдарды құрастырма — "
-        f"жалған дереккөздерге сілтеме жасамай, жалпы ислами қағидалар туралы өз сөзіңмен айт. "
-        f"Медициналық диагноз қойма, айыптамай, қорқытпай сөйле. Қазақ тілінде, қысқа (3-5 сөйлем) "
-        f"жауап бер және қазір шыдай алмай қалмауға көмектесетін нақты практикалық қадаммен аяқта."
+        f"Ты — современный, образованный мусульманский наставник (как молодой устаз, понимающий "
+        f"реалии сегодняшнего дня), который помогает избавиться от зависимости «{addiction}». "
+        f"Говори тёплым, дружеским тоном (можно обращаться «брат»), а не как старый мулла, читающий "
+        f"проповедь — современно и понятно. Учитывай реальную жизнь человека: стресс на работе, "
+        f"соцсети, давление окружения — и давай советы с учётом этого. "
+        f"Опирайся на исламские ценности: терпение (сабр), упование на Аллаха (таваккуль), очищение "
+        f"души через истигфар, силу дуа и намаза, напоминание, что Аллах — Прощающий и Милостивый — "
+        f"но говори об этом не как проповедь, а как заботливый совет. "
+        f"НЕ цитируй конкретные номера аятов Корана или хадисов и не придумывай точные формулировки — "
+        f"говори об общих исламских принципах своими словами, без ложных ссылок на источники. "
+        f"Не ставь медицинских диагнозов, не осуждай и не запугивай. Отвечай на русском языке, коротко "
+        f"(3-5 предложений), и заверши конкретным практическим шагом, который поможет не сорваться прямо сейчас."
     )
 
 
@@ -106,12 +106,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if user:
         await update.message.reply_text(
-            f"Сәлем! Сен жүйеде тіркеулісің.\n\n"
-            f"«{user.addiction}» жоқ — {user.streak} күн 🔥\n"
-            f"Рекорд: {user.max_streak} күн\n\n"
-            f"/status — прогресті көру\n"
-            f"/relapse — шыдай алмағанымды белгілеу\n"
-            f"/sos — қазір сырылғың келсе (ИИ-коуч кеңес береді)"
+            f"Привет! Ты уже в системе.\n\n"
+            f"Без «{user.addiction}» — {user.streak} дней 🔥\n"
+            f"Рекорд: {user.max_streak} дней\n\n"
+            f"/status — посмотреть прогресс\n"
+            f"/relapse — отметить срыв\n"
+            f"/sos — если сейчас тянет сорваться (ИИ-коуч даст совет)"
         )
         db.close()
         return
@@ -122,8 +122,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         for name in ADDICTIONS
     ]
     await update.message.reply_text(
-        "Сәлем! Мен сенің тәуелділіктен арылуыңа көмектесемін.\n\n"
-        "Неден арылғың келеді?",
+        "Привет! Я помогу тебе отказаться от зависимости.\n\n"
+        "От чего хочешь избавиться?",
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
 
@@ -137,22 +137,22 @@ async def handle_register(update: Update, context: ContextTypes.DEFAULT_TYPE):
     db = SessionLocal()
     existing = db.query(SobrietyUser).filter(SobrietyUser.telegram_id == chat_id).first()
     if existing:
-        await query.edit_message_text("Сен тіркеуден өткенсің ✅")
+        await query.edit_message_text("Ты уже зарегистрирован ✅")
         db.close()
         return
     db.close()
 
-    if addiction == "Басқа":
+    if addiction == "Другое":
         context.user_data["awaiting_custom_addiction"] = True
-        await query.edit_message_text("Неден арылғың келетінін мәтінмен жаз:")
+        await query.edit_message_text("Напиши текстом, от чего хочешь избавиться:")
         return
 
     create_sobriety_user(chat_id, addiction)
     context.user_data["awaiting_cost"] = True
     await query.edit_message_text(
-        f"Дайын! Бүгіннен бастап «{addiction}»-ден бас тартуыңды бақылап отырамын. 🚀\n\n"
-        f"Бұған күніне орта есеппен қанша жұмсайтын едің (теңгемен)?\n"
-        f"Санын жаз — қанша теңге үнемдегеніңді көрсетіп отырамын. Санағыш келмесе — 0 деп жаз."
+        f"Готово! Отслеживаю отказ от «{addiction}» с сегодняшнего дня. 🚀\n\n"
+        f"Сколько в среднем тратил(а) на это в день (в тенге)?\n"
+        f"Напиши число — буду показывать, сколько ты сэкономил. Если не хочешь считать — напиши 0."
     )
 
 
@@ -180,15 +180,15 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
         create_sobriety_user(chat_id, text)
         context.user_data["awaiting_cost"] = True
         await update.message.reply_text(
-            f"Дайын! Бүгіннен бастап «{text}»-ден бас тартуыңды бақылап отырамын. 🚀\n\n"
-            f"Бұған күніне орта есеппен қанша жұмсайтын едің (теңгемен)?\n"
-            f"Санын жаз — қанша теңге үнемдегеніңді көрсетіп отырамын. Санағыш келмесе — 0 деп жаз."
+            f"Готово! Отслеживаю отказ от «{text}» с сегодняшнего дня. 🚀\n\n"
+            f"Сколько в среднем тратил(а) на это в день (в тенге)?\n"
+            f"Напиши число — буду показывать, сколько ты сэкономил. Если не хочешь считать — напиши 0."
         )
         return
 
     if context.user_data.get("awaiting_cost"):
         if not text.isdigit():
-            await update.message.reply_text("Жай ғана сан жаз, мысалы 1500 (немесе 0).")
+            await update.message.reply_text("Напиши просто число, например 1500 (или 0).")
             return
 
         db = SessionLocal()
@@ -200,18 +200,18 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         context.user_data["awaiting_cost"] = False
         await update.message.reply_text(
-            "Жазып алдым! 📊\n\n"
-            "Әр таңда сағат 9:00-де қалай екеніңді сұрап отырамын.\n"
-            "Командалар:\n"
-            "/status — прогресс және үнемделген ақша\n"
-            "/relapse — шыдай алмағанымды белгілеу\n"
-            "/sos — қазір сырылғың келсе (ИИ-коуч кеңес береді)"
+            "Записал! 📊\n\n"
+            "Каждое утро в 9:00 буду спрашивать, как дела.\n"
+            "Команды:\n"
+            "/status — прогресс и сэкономленные деньги\n"
+            "/relapse — отметить срыв\n"
+            "/sos — если сейчас тянет сорваться (ИИ-коуч даст совет)"
         )
         return
 
     # Свободный текст вне сценариев регистрации — ИИ здесь не отвечает, только /sos.
     await update.message.reply_text(
-        "Сырылғың келсе — /sos жаз, ИИ-коуч кеңес береді.\nПрогресс үшін — /status."
+        "Если тянет сорваться — напиши /sos, ИИ-коуч даст совет.\nДля прогресса — /status."
     )
 
 
@@ -222,20 +222,20 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     db = SessionLocal()
     user = db.query(SobrietyUser).filter(SobrietyUser.telegram_id == chat_id).first()
     if not user:
-        await update.message.reply_text("Алдымен тіркелу керек: /start")
+        await update.message.reply_text("Сначала зарегистрируйся: /start")
         db.close()
         return
 
     days_total = (date.today() - user.start_date).days
     text = (
-        f"📊 «{user.addiction}» жоқ\n\n"
-        f"🔥 Ағымдағы серия: {user.streak} күн\n"
-        f"🏆 Рекорд: {user.max_streak} күн\n"
-        f"📅 Жол басынан бергі барлығы: {days_total} күн"
+        f"📊 Без «{user.addiction}»\n\n"
+        f"🔥 Текущий стрик: {user.streak} дней\n"
+        f"🏆 Рекорд: {user.max_streak} дней\n"
+        f"📅 Всего с начала пути: {days_total} дней"
     )
     if user.daily_cost:
         saved = user.streak * user.daily_cost
-        text += f"\n💰 Үнемделді: {saved} теңге"
+        text += f"\n💰 Сэкономлено: {saved} тенге"
     await update.message.reply_text(text)
     db.close()
 
@@ -246,10 +246,10 @@ async def sos(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = db.query(SobrietyUser).filter(SobrietyUser.telegram_id == chat_id).first()
     db.close()
 
-    addiction = user.addiction if user else "жаман әдет"
+    addiction = user.addiction if user else "плохая привычка"
     ai_reply = await ask_ai_coach(
         coach_system_prompt(addiction),
-        "Қазір шыдай алмай қалғым келіп тұр. Шыдауыма көмектес.",
+        "Мне прямо сейчас очень хочется сорваться. Помоги продержаться.",
     )
     await update.message.reply_text(ai_reply or random.choice(SOS_TIPS))
 
@@ -265,15 +265,15 @@ async def send_daily_checkin():
     users = db.query(SobrietyUser).all()
     for user in users:
         keyboard = [[
-            InlineKeyboardButton("✅ Шыдап жүрмін!", callback_data=f"holding_{user.id}"),
-            InlineKeyboardButton("😔 Шыдай алмадым", callback_data=f"relapsed_{user.id}"),
+            InlineKeyboardButton("✅ Держусь!", callback_data=f"holding_{user.id}"),
+            InlineKeyboardButton("😔 Сорвался", callback_data=f"relapsed_{user.id}"),
         ]]
         await app.bot.send_message(
             chat_id=user.telegram_id,
             text=(
-                f"Қайырлы таң! ☀️\n\n"
-                f"🔥 «{user.addiction}» жоқ — {user.streak} күн\n"
-                f"Кешегі күн қалай өтті?"
+                f"Доброе утро! ☀️\n\n"
+                f"🔥 Без «{user.addiction}» — {user.streak} дней\n"
+                f"Как прошёл вчерашний день?"
             ),
             reply_markup=InlineKeyboardMarkup(keyboard),
         )
@@ -290,7 +290,7 @@ async def handle_checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     db = SessionLocal()
     user = db.query(SobrietyUser).filter(SobrietyUser.id == user_id).first()
     if not user:
-        await query.edit_message_text("Пайдаланушы табылмады. /start жаз")
+        await query.edit_message_text("Пользователь не найден. Напиши /start")
         db.close()
         return
 
@@ -302,7 +302,7 @@ async def handle_checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
             SobrietyCheckin.date == today,
         ).first()
         if already:
-            await query.edit_message_text("Сен бүгін белгілеп қойдың ✅")
+            await query.edit_message_text("Ты уже отметился сегодня ✅")
             db.close()
             return
 
@@ -314,11 +314,11 @@ async def handle_checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         quote = random.choice(MOTIVATIONAL_QUOTES)
         text = (
-            f"Жарайсың! 🔥 «{user.addiction}» жоқ қазір {user.streak} күн!\n"
-            f"Рекорд: {user.max_streak} күн"
+            f"Молодец! 🔥 Уже {user.streak} дней без «{user.addiction}»!\n"
+            f"Рекорд: {user.max_streak} дней"
         )
         if user.daily_cost:
-            text += f"\n💰 Үнемделді: {user.streak * user.daily_cost} теңге"
+            text += f"\n💰 Сэкономлено: {user.streak * user.daily_cost} тенге"
         text += f"\n\n{quote}"
         await query.edit_message_text(text)
     else:
@@ -333,15 +333,15 @@ async def log_relapse(query, db, user, today):
         SobrietyRelapse.date == today,
     ).first()
     if already:
-        await query.edit_message_text("Бүгін шыдай алмадым деп бұрын белгіленген.")
+        await query.edit_message_text("Срыв сегодня уже отмечен.")
         return
 
     db.add(SobrietyRelapse(user_id=user.id, date=today, note=None))
     user.streak = 0
     db.commit()
     await query.edit_message_text(
-        "Шыдай алмадым деп жазылды. Берілме, ертең жаңа күн 💪\n"
-        "Шыдай алмау — жолдың бір бөлігі, оның соңы емес."
+        "Срыв записан. Не сдавайся, завтра новый день 💪\n"
+        "Срывы — часть пути, а не его конец."
     )
 
 
@@ -352,13 +352,13 @@ async def relapse_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     db = SessionLocal()
     user = db.query(SobrietyUser).filter(SobrietyUser.telegram_id == chat_id).first()
     if not user:
-        await update.message.reply_text("Алдымен тіркелу керек: /start")
+        await update.message.reply_text("Сначала зарегистрируйся: /start")
         db.close()
         return
 
-    keyboard = [[InlineKeyboardButton("😔 Иә, шыдай алмадым", callback_data=f"relapsed_{user.id}")]]
+    keyboard = [[InlineKeyboardButton("😔 Да, подтвердить срыв", callback_data=f"relapsed_{user.id}")]]
     await update.message.reply_text(
-        "Сырылуды белгілегің келе ме? Серия нөлге түседі.",
+        "Точно хочешь отметить срыв? Стрик обнулится.",
         reply_markup=InlineKeyboardMarkup(keyboard),
     )
     db.close()
