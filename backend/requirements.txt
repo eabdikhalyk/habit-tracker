@@ -1,14 +1,8 @@
-fastapi
-uvicorn
 sqlalchemy
 psycopg2-binary
-pydantic
-python-jose
-passlib
 python-dotenv
-anthropic
-python-multipart
 python-telegram-bot
 apscheduler
 pytz
 alembic
+httpx

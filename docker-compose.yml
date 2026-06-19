@@ -16,27 +16,12 @@ services:
       timeout: 5s
       retries: 5
 
-  backend:
-    build: ./backend
-    # Локально: миграции + сервер с hot-reload (--reload). В проде reload не используется.
-    command: sh -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
-    ports:
-      - "8000:8000"
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}?sslmode=disable
-      SECRET_KEY: ${SECRET_KEY}
-      FRONTEND_ORIGINS: http://localhost:3000
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - ./backend:/app
-
   bot:
     build: ./backend
-    command: python bot.py
+    command: sh -c "alembic upgrade head && python bot.py"
     environment:
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      GROQ_API_KEY: ${GROQ_API_KEY}
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
     depends_on:
       db:
