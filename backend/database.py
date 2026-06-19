@@ -9,9 +9,9 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# SSL только для Railway, не для локального Docker
-if DATABASE_URL and "sslmode" not in DATABASE_URL and "railway" in DATABASE_URL:
-    DATABASE_URL += "?sslmode=require"
+# SSL принудительно НЕ навязываем: внутренний адрес Railway
+# (postgres.railway.internal) SSL не поддерживает, а sslmode=require там всё ломает.
+# По умолчанию psycopg2 использует sslmode=prefer — сам решает по возможностям сервера.
 
 engine = create_engine(DATABASE_URL)
 
