@@ -72,7 +72,7 @@ def coach_system_prompt(addiction: str) -> str:
     )
 
 
-async def ask_ai_coach(system_prompt: str, user_message: str) -> str | None:
+async def ask_ai_coach(system_prompt: str, user_message: str, max_tokens: int = 800) -> str | None:
     if not GROQ_API_KEY:
         return None
 
@@ -84,8 +84,8 @@ async def ask_ai_coach(system_prompt: str, user_message: str) -> str | None:
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message},
         ],
-        "max_tokens": 800,
-        "temperature": 0.7,
+        "max_tokens": max_tokens,
+        "temperature": 0.9,
     }
     try:
         async with httpx.AsyncClient(timeout=20) as client:
@@ -95,6 +95,16 @@ async def ask_ai_coach(system_prompt: str, user_message: str) -> str | None:
             return data["choices"][0]["message"]["content"].strip()
     except Exception:
         return None
+
+
+def support_phrase_prompt(addiction: str) -> str:
+    return (
+        f"Ты — тёплый, современный мусульманский наставник, который коротко поддерживает человека, "
+        f"избавляющегося от зависимости «{addiction}». Напиши ОДНУ короткую фразу поддержки "
+        f"(до 12 слов, можно с эмодзи), каждый раз разную и не банальную. Можно изредка мягко "
+        f"упомянуть терпение (сабр) или Аллаха, но без проповеди. Не повторяй заданные ранее фразы. "
+        f"Отвечай только этой фразой, без вступлений и кавычек."
+    )
 
 
 # ── Регистрация ───────────────────────────────────────────────────────────
@@ -259,7 +269,7 @@ async def sos(update: Update, context: ContextTypes.DEFAULT_TYPE):
 scheduler = AsyncIOScheduler()
 
 
-@scheduler.scheduled_job("cron", hour=21, minute=4, timezone=TZ)
+@scheduler.scheduled_job("cron", hour=9, minute=0, timezone=TZ)
 async def send_daily_checkin():
     db = SessionLocal()
     users = db.query(SobrietyUser).all()
@@ -312,7 +322,12 @@ async def handle_checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
             user.max_streak = user.streak
         db.commit()
 
-        quote = random.choice(MOTIVATIONAL_QUOTES)
+        ai_quote = await ask_ai_coach(
+            support_phrase_prompt(user.addiction),
+            f"Я продержался {user.streak} дней без {user.addiction}. Поддержи меня коротко.",
+            max_tokens=60,
+        )
+        quote = ai_quote or random.choice(MOTIVATIONAL_QUOTES)
         text = (
             f"Молодец! 🔥 Уже {user.streak} дней без «{user.addiction}»!\n"
             f"Рекорд: {user.max_streak} дней"
