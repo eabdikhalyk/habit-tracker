@@ -18,6 +18,9 @@ class SobrietyUser(Base):
     max_streak = Column(Integer, default=0)
     daily_cost = Column(Integer, default=0)
     # ↑ сколько в среднем тратил в день на зависимость (для счётчика сэкономленных денег)
+    last_reminder_date = Column(Date, nullable=True)
+    # ↑ дата последнего отправленного утреннего напоминания. Защита от дублей,
+    # если параллельно запущено больше одного инстанса бота (см. send_daily_checkin).
     created_at = Column(DateTime, server_default=func.now())
 
 
